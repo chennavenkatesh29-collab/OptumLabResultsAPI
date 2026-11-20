@@ -37,8 +37,7 @@ public sealed class LabResultService(ILabResultRepository repository) : ILabResu
         return await repository.GetByPatientIdAsync(patientId.Trim(), cancellationToken);
     }
 
-    public async Task<LabResult?> UpdateAsync(
-        int id, UpdateLabResultRequest request, CancellationToken cancellationToken = default)
+    public async Task<LabResult?> UpdateAsync(int id, UpdateLabResultRequest request, CancellationToken cancellationToken = default)
     {
         if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id), "ID must be greater than zero.");
         ArgumentNullException.ThrowIfNull(request);

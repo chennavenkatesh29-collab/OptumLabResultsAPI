@@ -3,10 +3,6 @@ using OptumLabResultsAPI.Models;
 
 namespace OptumLabResultsAPI.Repositories;
 
-/// <summary>
-/// Demo-only in-memory storage. Data is lost when the application restarts.
-/// Replace this implementation with EF Core or Dapper for persistent storage.
-/// </summary>
 public sealed class InMemoryLabResultRepository : ILabResultRepository
 {
     private readonly ConcurrentDictionary<int, LabResult> _results = new();
@@ -28,8 +24,7 @@ public sealed class InMemoryLabResultRepository : ILabResultRepository
         return Task.FromResult(_results.TryGetValue(id, out var result) ? Copy(result) : null);
     }
 
-    public Task<IReadOnlyList<LabResult>> GetByPatientIdAsync(
-        string patientId, CancellationToken cancellationToken = default)
+    public Task<IReadOnlyList<LabResult>> GetByPatientIdAsync(string patientId, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         IReadOnlyList<LabResult> results = _results.Values
